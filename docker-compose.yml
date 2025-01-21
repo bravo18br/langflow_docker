@@ -1,0 +1,24 @@
+services:
+  langflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: langflow
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - "7860:7860"
+    healthcheck:
+      test: ["CMD", "curl", "-sSf", "http://localhost:7860"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: always
+    networks:
+      - langflow_net
+
+networks:
+  langflow_net:
+    name: langflow_net
+    driver: bridge
+    attachable: true
